@@ -9,7 +9,7 @@
 
 
 
-.about-me {
+.header {
     position: relative;
     display: flex;
     justify-content: center;
@@ -58,11 +58,24 @@
     }
 
     &__text {
-        margin: 1.5em 0;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: 700;
-        font-size: clamp(2.7rem, 2rem + 1.5vw, 4.2rem);
-	    line-height: 150%;
+        margin: 4em 0;
+
+        p {
+            position: relative;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.7rem, 2rem + 1.5vw, 4.2rem);
+            line-height: 150%;
+            &::after {
+                content: '|';
+                color: c.$main;
+            }
+        }
+        .anime {
+            &::after {
+                animation: typing 0.8s steps(2) infinite alternate;
+            }
+        }
 
         strong {
             color: c.$main;
@@ -169,5 +182,14 @@
         color: #e44d26;
         font-size: 6rem;
         font-size: clamp(3rem, 2rem + 2.5vw, 6rem);
+    }
+}
+
+@keyframes typing {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
