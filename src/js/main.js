@@ -1,70 +1,74 @@
-const para1 = document.querySelector('.header__text');
+const paragraphContainer = document.querySelector('.header__text');
 
-const typeMsg = function () {
-  const txt1 = 'Cześć, nazywam się ';
-  const txt2 = 'Patryk Nowak';
-  const p = document.createElement('p');
+const text = [
+  {
+    txt: 'Cześć, nazywam się ',
+    htmlTag: null,
+    htmlClass: null,
+  },
+  {
+    txt: 'Patryk Nowak',
+    htmlTag: 'strong',
+    htmlClass: null,
+  },
+  {
+    txt: '',
+    htmlTag: 'br',
+    htmlClass: null,
+  },
+  {
+    txt: 'Projektuję',
+    htmlTag: 'span',
+    htmlClass: 'design',
+  },
+  {
+    txt: ' i ',
+    htmlTag: null,
+    htmlClass: null,
+  },
+  {
+    txt: 'tworzę',
+    htmlTag: 'span',
+    htmlClass: 'develop',
+  },
+  {
+    txt: ' strony internetowe.',
+    htmlTag: null,
+    htmlClass: null,
+  },
+];
 
-  para1.append(p);
-
+const typeMsg2 = function (message, paragraphContainer) {
+  // Helpers
   const interval = 75;
   let delay = 0;
 
-  for (let i = 0; i < [...txt1].length; i++) {
-    const typeLetter = () => (p.textContent += [...txt1][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
+  const typeText = function (txt, htmlElement) {
+    const spreadTxt = [...txt];
 
-  const strong = document.createElement('strong');
-  setTimeout(() => p.append(strong), delay);
+    for (let i = 0; i < spreadTxt.length; i++) {
+      const typeLetter = () => (htmlElement.innerHTML += spreadTxt[i]);
+      setTimeout(typeLetter, delay);
+      delay += interval;
+    }
+  };
 
-  for (let i = 0; i < [...txt2].length; i++) {
-    const typeLetter = () => (strong.textContent += [...txt2][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
+  const paragraph = document.createElement('p');
+  paragraphContainer.append(paragraph);
 
-  const txt3 = 'Projektuję';
-  const txt4 = ' i ';
-  const txt5 = 'tworzę';
-  const txt6 = ' strony internetowe.';
+  let currentHtml = paragraph;
 
-  const br = document.createElement('br');
-  const design = document.createElement('span');
-  const develop = document.createElement('span');
-  design.classList.add('design');
-  develop.classList.add('develop');
+  message.forEach((object) => {
+    const { txt, htmlTag, htmlClass } = object;
+    // const html = document.createElement(htmlTag);
+    const html = htmlTag ? document.createElement(htmlTag) : currentHtml;
+    if (htmlClass) html.classList = htmlClass;
 
-  setTimeout(() => p.append(br), delay);
-  setTimeout(() => p.append(design), delay);
+    if (htmlTag) setTimeout(() => currentHtml.append(html), delay);
+    typeText(txt, html);
+    if (htmlTag === 'p') setTimeout(() => (currentHtml = html), delay);
+  });
 
-  for (let i = 0; i < [...txt3].length; i++) {
-    const typeLetter = () => (design.textContent += [...txt3][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
-
-  for (let i = 0; i < [...txt4].length; i++) {
-    const typeLetter = () => (p.innerHTML += [...txt4][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
-
-  setTimeout(() => p.append(develop), delay);
-
-  for (let i = 0; i < [...txt5].length; i++) {
-    const typeLetter = () => (develop.innerHTML += [...txt5][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
-
-  for (let i = 0; i < [...txt6].length; i++) {
-    const typeLetter = () => (p.innerHTML += [...txt6][i]);
-    setTimeout(typeLetter, delay);
-    delay += interval;
-  }
-
-  setTimeout(() => p.classList.add('anime'), delay);
+  setTimeout(() => paragraph.classList.add('anime'), delay);
 };
-typeMsg();
+typeMsg2(text, paragraphContainer);

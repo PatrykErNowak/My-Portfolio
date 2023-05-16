@@ -58,6 +58,7 @@
     }
 
     &__text {
+        min-height: 160px; // ! test property
         margin: 4em 0;
 
         p {
